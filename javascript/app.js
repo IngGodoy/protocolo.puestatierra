@@ -70,11 +70,13 @@ buttonAdd.addEventListener("click",()=>{
     console.log(puestaTierraBad);
     let imprimirOk="";
     let imprimirBad="";
+    // imprimir PAT OK
     puestaTierraOk.forEach((element)=>{
         imprimirOk= imprimirOk+" " +element.nombrePuestaTierra;
     })
     alert("Puestas a tierra con valor menor a 40 Ohm (si cumplen): "+imprimirOk);
-    puestaTierraOk.forEach((element)=>{
+    // imprimir PAT BAD
+    puestaTierraBad.forEach((element)=>{
         imprimirBad= imprimirBad+" " +element.nombrePuestaTierra;
     })
     alert("Puestas a tierra con valor mayor a 40 Ohm (no cumplen): "+imprimirBad);
