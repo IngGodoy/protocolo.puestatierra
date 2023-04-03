@@ -1,37 +1,81 @@
+const arrayPuestaTierra=[]; // array con la lista puesta a tierra
 let btnAgregar=document.getElementById("buttonAdd"); // leer el botón de agregar puesta a tierra del DOM
+let valorMedio=document.getElementById("buttonValorMedio"); // leer el botón de agregar PAT
+let borrar=document.getElementById("buttonBorrar"); // leer el botón borrar array PAT
+let ordenar=document.getElementById("buttonOrdenar"); // leer el botón para ordenar la lista PAT
+let imprimirLista=document.getElementById("buttonImprimir"); // leer el botón para ordenar la lista PAT
+// funcion para capturar los datos de los objetos puesta a tierra
+function crearObjeto(){
+    let finalizar=1;
+    let nombrePuestaTierra; //Nombre de la puesta a tierra
+    let valorPuestaTierra; // valor de la resistencia de puesta a tierra
+    let conexionTablero; // indicacion por parte del usuario si la PAT esta conectada al tablero general
+   //ciclo para agregar puestas a tierra
+    do{
+        nombrePuestaTierra=prompt("Indique el nombre de la puesta a tierra");
+        valorPuestaTierra=Number(prompt("Indique el valor de la resistencia a tierra en Ohm"));
+        conexionTablero=prompt("si la puesta a tierra está conectado al tablero general coloque la SI en caso contrario coloque NO");
+        arrayPuestaTierra.push(new PuestaTierra(nombrePuestaTierra,valorPuestaTierra,conexionTablero));
+        finalizar=prompt("Si desea finalizar presione la tecla 1 en caso contrario presione cualquier otra tecla");
+    } while(finalizar!=1);
+    alert("Se cargaron los valores de puesta a tierra de forma exitosa...");
+};
+function imprimir(){
+    console.log(arrayPuestaTierra);
+}
 //evento click de agregar puesta a tierra
 buttonAdd.addEventListener("click",()=>{
-    let finishi=1;
-    let nameGround; //Nombre de la puesta a tierra
-    let valueGround; // valor de la resistencia de puesta a tierra
-    let groundOk=""; // acumulador de nombre de las puestas a tierra OK
-    let groundBad=""; // acumulador de nombre de las puestas a tierra malas
-    let averageGround=0; //acumulador de valores PAT
-    let counterGroubd=0; // contador de cantidad de puesta a tierra
-    //ciclo para agregar puestas a tierra
-    do{
-        nameGround=prompt("Indique el nombre de la puesta a tierra");
-        valueGround=Number(prompt("Indique el valor de la resistencia a tierra en Ohm"));
-        if (valueGround<=40){
-            alert("la puesta a tierra si cumple");
-            groundOk= groundOk+" "+nameGround;
-
-        } else{
-            alert("la puesta a tierra no cumple");
-            groundBad= groundBad+" "+nameGround;
-        }
-        finishi=prompt("Si desea finalizar presione la tecla 1 en caso contrario presione cualquier otra tecla");
-        averageGround= valueGround+averageGround;
-        counterGroubd++;
-    } while(finishi!=1);
-   alert("Se cargaron los valores de puesta a tierra de forma exitosa...");
-   alert("Puesta a tierras con lecturas dentro de la Norma: "+groundOk);
-   alert("Puesta a tierras con lecturas fuera de Norma: "+groundBad);
-   alert("el valor medio de todas las resistencia a tierra es: "+calculateAverage(averageGround,counterGroubd)+"ohm");
-   
-});
-// funcion para calcular el valor medio de las resistencias a tierra
-function calculateAverage(averageGround,counterGroubd){
-    let printGround=averageGround/counterGroubd;
-    return printGround;
-};
+    crearObjeto();
+    imprimir();   
+ });
+ // evento valor medio
+ valorMedio.addEventListener("click",()=>{
+    let acumulador=0;
+    arrayPuestaTierra.forEach((element)=>{
+        acumulador=element.valorPuestaTierra+acumulador;
+    })
+    let valorMedio=acumulador/arrayPuestaTierra.length;
+    alert(" el valor medio de las resistencias de puesta a tierra es: "+valorMedio+" Ohm");
+ });
+ // evento borrar
+ borrar.addEventListener("click",()=>{
+    let i=0;
+    let finIteracion=arrayPuestaTierra.length;
+    console.log(finIteracion);
+    for(i=0;i<finIteracion;i++){
+        arrayPuestaTierra.pop();
+       
+    };
+    console.log(arrayPuestaTierra);
+    alert("lista de puesta a tierra borrada con exito");
+ });
+ // evento ordenar
+ ordenar.addEventListener("click",()=>{
+    arrayPuestaTierra.sort((a,b)=>{
+    if (a.valorPuestaTierra>b.valorPuestaTierra){
+       return 1;
+    } else if (a.valorPuestaTierra<b.valorPuestaTierra){
+        return -1;
+     } else{
+        return 0;
+     }
+    });  
+    console.log(arrayPuestaTierra);
+ });
+ // evento imprimir
+ imprimirLista.addEventListener("click",()=>{
+    const puestaTierraOk= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra<40);
+    console.log(puestaTierraOk);
+    const puestaTierraBad= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra>=40);
+    console.log(puestaTierraBad);
+    let imprimirOk="";
+    let imprimirBad="";
+    puestaTierraOk.forEach((element)=>{
+        imprimirOk= imprimirOk+" " +element.nombrePuestaTierra;
+    })
+    alert("Puestas a tierra con valor menor a 40 Ohm (si cumplen): "+imprimirOk);
+    puestaTierraOk.forEach((element)=>{
+        imprimirBad= imprimirBad+" " +element.nombrePuestaTierra;
+    })
+    alert("Puestas a tierra con valor mayor a 40 Ohm (no cumplen): "+imprimirBad);
+ });
