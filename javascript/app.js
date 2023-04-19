@@ -7,7 +7,6 @@ let imprimirLista=document.getElementById("buttonImprimir"); // leer el botón p
 let imprimirTexto=document.getElementById("imprimirDom"); //leer etiqueta del DOM para imprimir
 // funcion para capturar los datos de los objetos puesta a tierra
 function crearObjeto(){
-   traerLocalStore();
     //leer datos del DOM
     let nombrePuestaTierra=document.getElementById("nombrePat").value; //Nombre de la puesta a tierra
     let valorPuestaTierra=Number(document.getElementById("valorPat").value); // valor de la resistencia de puesta a tierra
