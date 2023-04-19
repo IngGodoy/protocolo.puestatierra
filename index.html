@@ -12,8 +12,28 @@
         <h1>Generador de texto del protocolo de medición de puesta a tierra</h1>
     </header>
     <main>
-        <p>Presione el botón para agregar las puesta a tierra</p>
+        <div id="form">
+         <label for="nombrePat">Indique el nombre de la Puesta a Tierra</label>   
+         <input type="text" placeholder="nombre Puesta a tierra" id="nombrePat" name="nombrePat">
+         <br>
+         <br>
+         <label for="valorPat">Indique el valor de resistencia a Puesta a tierra</label>
+         <input type="number" placeholder="valor de puesta tierra Ohm" id="valorPat" name="valorPat">
+         <br>
+         <br>
+         <label for="conexionPat">Selecione el tipo de conexión entre las puesta a Tierras</label>
+         <select id="conexionPat" name="conexionPat">
+            <option value="-1">Seleccione un tipo de Conexión</option>
+            <option value="0">Equipotencializada</option>
+            <option value="1">No Equipotencializada</option>
+            <option value="2">No aplica</option>
+         </select>
+         <br>
+         <br>
+         <p>Presione el botón para agregar la puesta a tierra</p>
          <button id="buttonAdd">Agregar</button>
+        </div>
+        <p>..................................................................</p>
          <p>Presione el botón para calcular el valor medio de la lista de puesta a tierra</p>
          <button id="buttonValorMedio"> Valor medio</button>
          <p>Presione el botón para borrar todos los elementos agregados a la lista de puestas a tierra</p>
@@ -21,7 +41,14 @@
          <p>Presione el botón para ordenar la lista de puestas a tierra de menor resistencia a tierra en Ohm a mayor</p>
          <button id="buttonOrdenar"> Ordenar lista PAT</button>
          <p>Presione el botón para mostrar la clasificación de resistencia a tierra</p>
-         <button id="buttonImprimir"> Mostar clasificación PAT</button>         
+         <button id="buttonImprimir"> Mostar clasificación PAT</button>
+         <br>
+         <br>
+         <p>..................................................................</p>
+         <p>Impresión de datos:</p>
+        <div id="imprimirDom">
+            
+        </div>         
     </main>
     
     <!-- Enlace de javascript-->
