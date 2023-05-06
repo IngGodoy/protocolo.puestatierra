@@ -1,4 +1,4 @@
-let arrayPuestaTierra=[]; // array con la lista puesta a tierra
+const arrayPuestaTierra=[]; // array con la lista puesta a tierra
 let btnAgregar=document.getElementById("buttonAdd"); // leer el botón de agregar puesta a tierra del DOM
 let valorMedio=document.getElementById("buttonValorMedio"); // leer el botón de agregar PAT
 let borrar=document.getElementById("buttonBorrar"); // leer el botón borrar array PAT
@@ -6,24 +6,39 @@ let ordenar=document.getElementById("buttonOrdenar"); // leer el botón para ord
 let imprimirLista=document.getElementById("buttonImprimir"); // leer el botón para ordenar la lista PAT
 let imprimirTexto=document.getElementById("imprimirDom"); //leer etiqueta del DOM para imprimir
 // funcion para capturar los datos de los objetos puesta a tierra
+
 function crearObjeto(){
     //leer datos del DOM (datos de PAT)
     let nombrePuestaTierra=document.getElementById("nombrePat").value; //Nombre de la puesta a tierra
     let valorPuestaTierra=Number(document.getElementById("valorPat").value); // valor de la resistencia de puesta a tierra
     let conexionPat=Number(document.getElementById("conexionPat").value); // indicacion por parte del usuario si la PAT esta conectada al tablero general
     arrayPuestaTierra.push(new PuestaTierra(nombrePuestaTierra,valorPuestaTierra,conexionPat));
-    guardarLocalStore();
-    alert("Se cargaron los valores de puesta a tierra con nombre: " +nombrePuestaTierra+"  valor:  "+valorPuestaTierra+"de forma exitosa...");
+    guardarLocalStore(arrayPuestaTierra);
+    swal ( {
+      title: "Valor de Puesta a tierra",
+      text:"con nombre "+nombrePuestaTierra+" cargado con exito",
+      icon:"success"
+    });
+    // alert("Se cargaron los valores de puesta a tierra con nombre: " +nombrePuestaTierra+"  valor:  "+valorPuestaTierra+"de forma exitosa...");
     console.log(conexionPat); 
 };
-function guardarLocalStore(){
+function guardarLocalStore(element){
    // guardar la array en el local store cada vez que alla un cambio
-   localStorage.setItem("arrayPat",JSON.stringify(arrayPuestaTierra));
+   let datosLocalStore=element;
+   localStorage.setItem("arrayPat",JSON.stringify(datosLocalStore));
 }
 function traerLocalStore(){
-   // acceder a los datos guadados en el localstore
-   arrayPuestaTierra=JSON.parse(localStorage.getItem("arrayPat"));
-   console.log(arrayPuestaTierra);
+   // verificar si hay datos en el localStore
+   if (localStorage.length > 0 && localStorage!=null){
+      let copiaLocalStore = JSON.parse(localStorage.getItem("arrayPat"));
+      //verificar si array PAT es distinta de la lista local Store
+      if (copiaLocalStore.length!=arrayPuestaTierra.length){
+       //copiar la array del local store y cargar en la array PAT
+       for (let i = 0; i < copiaLocalStore.length; i++) { 
+         arrayPuestaTierra.push(copiaLocalStore[i]);
+       }
+      }
+    }
 }
 function imprimir(texto){ 
    let p=document.createElement("p"); //crear elemento
@@ -39,15 +54,20 @@ function reset(){
        }  
    }
 }
+function borrarArray(array) {
+   while (array.length!=0) {
+     array.pop();
+   }
+   return array;
+
+ }
 //evento click de agregar puesta a tierra
 buttonAdd.addEventListener("click",()=>{
     crearObjeto();
-    reset(); // reset al DOM ya que cambio la lista PAT
     console.log(arrayPuestaTierra);
  });
  // evento valor medio
  valorMedio.addEventListener("click",()=>{
-    traerLocalStore();
     let acumulador=0;
     arrayPuestaTierra.forEach((element)=>{
         acumulador=element.valorPuestaTierra+acumulador;
@@ -57,16 +77,21 @@ buttonAdd.addEventListener("click",()=>{
     reset();
     imprimir(texto);
     
+    
  });
- // evento borrar
+ // evento borrar todo la lista
  borrar.addEventListener("click",()=>{
-   arrayPuestaTierra=[];
-    guardarLocalStore();
+    borrarArray(arrayPuestaTierra);
+    guardarLocalStore(arrayPuestaTierra);
     reset();
+    swal ( {
+      title: "Datos borrados",
+      text:"Todos los valores de puesta a tierra fueron borrados",
+      icon:"warning"
+    });
  });
  // evento ordenar
  ordenar.addEventListener("click",()=>{
-    traerLocalStore();
     arrayPuestaTierra.sort((a,b)=>{
     if (a.valorPuestaTierra>b.valorPuestaTierra){
        return 1;
@@ -76,7 +101,6 @@ buttonAdd.addEventListener("click",()=>{
      }
         return 0;
     });  
-    guardarLocalStore();
     reset();
     let texto="";
     arrayPuestaTierra.forEach((element)=>{
@@ -87,7 +111,6 @@ buttonAdd.addEventListener("click",()=>{
  });
  // evento imprimir
  imprimirLista.addEventListener("click",()=>{
-    traerLocalStore();
     const puestaTierraOk= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra<40);
     console.log(puestaTierraOk);
     const puestaTierraBad= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra>=40);
@@ -108,4 +131,8 @@ buttonAdd.addEventListener("click",()=>{
     })
     imprimirBad="Puestas a tierra con valor mayor a 40 Ohm (no cumplen): "+imprimirBad;
     imprimir(imprimirBad);
+ });
+ // evento de carga de página recuperar la array PAT
+ document.addEventListener('DOMContentLoaded', ()=> {
+   traerLocalStore();
  });
