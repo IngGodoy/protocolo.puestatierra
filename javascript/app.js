@@ -1,10 +1,10 @@
 const arrayPuestaTierra=[]; // array con la lista puesta a tierra
-let btnAgregar=document.getElementById("buttonAdd"); // leer el botón de agregar puesta a tierra del DOM
 let valorMedio=document.getElementById("buttonValorMedio"); // leer el botón de agregar PAT
 let borrar=document.getElementById("buttonBorrar"); // leer el botón borrar array PAT
 let ordenar=document.getElementById("buttonOrdenar"); // leer el botón para ordenar la lista PAT
 let imprimirLista=document.getElementById("buttonImprimir"); // leer el botón para ordenar la lista PAT
 let imprimirTexto=document.getElementById("imprimirDom"); //leer etiqueta del DOM para imprimir
+let form=document.getElementById("form"); // leer formulario
 // funcion para capturar los datos de los objetos puesta a tierra
 
 function crearObjeto(){
@@ -62,7 +62,8 @@ function borrarArray(array) {
 
  }
 //evento click de agregar puesta a tierra
-buttonAdd.addEventListener("click",()=>{
+form.addEventListener("submit",(element)=>{
+    element.preventDefault();
     crearObjeto();
     console.log(arrayPuestaTierra);
  });

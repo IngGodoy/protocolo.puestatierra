@@ -12,13 +12,13 @@
         <h1>Generador de texto del protocolo de medición de puesta a tierra</h1>
     </header>
     <main>
-        <div id="form">
+        <form id="form">
          <label for="nombrePat">Indique el nombre de la Puesta a Tierra</label>   
          <input type="text" placeholder="nombre Puesta a tierra" id="nombrePat" name="nombrePat">
          <br>
          <br>
          <label for="valorPat">Indique el valor de resistencia a Puesta a tierra</label>
-         <input type="number" placeholder="valor de puesta tierra Ohm" id="valorPat" name="valorPat">
+         <input type="text" placeholder="valor de puesta tierra Ohm" id="valorPat" name="valorPat">
          <br>
          <br>
          <label for="conexionPat">Selecione el tipo de conexión entre las puesta a Tierras</label>
@@ -31,8 +31,8 @@
          <br>
          <br>
          <p>Presione el botón para agregar la puesta a tierra</p>
-         <button id="buttonAdd">Agregar</button>
-        </div>
+         <button type="submit">Agregar</button>
+        </form>
         <p>..................................................................</p>
          <p>Presione el botón para calcular el valor medio de la lista de puesta a tierra</p>
          <button id="buttonValorMedio"> Valor medio</button>
