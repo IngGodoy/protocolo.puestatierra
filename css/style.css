@@ -1,11 +1,13 @@
 body {
     text-align: center;
-    margin:0;
-    padding:0;
+    background-color: green;
 }
 header{
-    background-color: green;
+    
     color: white;
+}
+main{
+    background-color: rgb(170, 209, 198);
 }
 
 .contenedor {
@@ -26,11 +28,15 @@ form{
 }
 #contenedorClima{
     grid-area: clima;
+    border: 5px solid rgb(0, 179, 255); 
+    background-color: rgb(155, 198, 216); 
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px; 
 }
 main{
     display: grid;
     grid-template-areas:
-    "clima clima"
     "form botones"
-    "impresion impresion"
+    "impresion clima"
 }
