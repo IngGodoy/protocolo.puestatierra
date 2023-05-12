@@ -12,7 +12,9 @@
         <h1>Generador de texto del protocolo de medición de puesta a tierra</h1>
     </header>
     <main>
-        <form id="form">
+        <form id="form" class="contenedor">
+        <br>
+        <br>
          <label for="nombrePat">Indique el nombre de la Puesta a Tierra</label>   
          <input type="text" placeholder="nombre Puesta a tierra" id="nombrePat" name="nombrePat">
          <br>
@@ -33,31 +35,31 @@
          <p>Presione el botón para agregar la puesta a tierra</p>
          <button type="submit">Agregar</button>
         </form>
-        <p>..................................................................</p>
-         <p>Presione el botón para calcular el valor medio de la lista de puesta a tierra</p>
-         <button id="buttonValorMedio"> Valor medio</button>
-         <p>Presione el botón para borrar todos los elementos agregados a la lista de puestas a tierra</p>
-         <button id="buttonBorrar"> Borrar lista PAT</button>
-         <p>Presione el botón para ordenar la lista de puestas a tierra de menor resistencia a tierra en Ohm a mayor</p>
-         <button id="buttonOrdenar"> Ordenar lista PAT</button>
-         <p>Presione el botón para mostrar la clasificación de resistencia a tierra</p>
-         <button id="buttonImprimir"> Mostar clasificación PAT</button>
-         <br>
-         <br>
-         <p>..................................................................</p>
-         <p>Impresión de datos:</p>
-        <div id="imprimirDom">
-            
-        </div>         
-    </main>
-    <br>
-    <p>....................................................................</p>
-    <div id="contenedorClima">
-        <div id="resultadoClima">
-
+        <div id="botones" class="contenedor">
+            <p>Presione el botón para calcular el valor medio de la lista de puesta a tierra</p>
+            <button id="buttonValorMedio"> Valor medio</button>
+            <p>Presione el botón para borrar todos los elementos agregados a la lista de puestas a tierra</p>
+            <button id="buttonBorrar"> Borrar lista PAT</button>
+            <p>Presione el botón para ordenar la lista de puestas a tierra de menor resistencia a tierra en Ohm a mayor</p>
+            <button id="buttonOrdenar"> Ordenar lista PAT</button>
+            <p>Presione el botón para mostrar la clasificación de resistencia a tierra</p>
+            <button id="buttonImprimir"> Mostar clasificación PAT</button>
+            <br>
+            <br>
         </div>
-
-    </div>
+        <div id="contenedorImpresion" class="contenedor">
+            <p>Impresión de datos:</p>
+            <div id="imprimirDom"></div> 
+            <br>   
+        </div>
+        <div id="contenedorClima">
+            <div id="resultadoClima"></div>
+        </div>    
+    </main>
+    
+    
+    
+    
     <!-- Enlace de javascript-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script> <!-- Enlace de la libreria sweetalert -->
     <script src="./javascript/apiclima.js"></script>

@@ -1,8 +1,36 @@
+body {
+    text-align: center;
+    margin:0;
+    padding:0;
+}
 header{
     background-color: green;
     color: white;
-    height: 50%;
 }
-body{
-    text-align: center;
+
+.contenedor {
+    border: 5px solid green; 
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px; 
+
+  }
+form{
+    grid-area: form;
+}
+#botones{
+    grid-area: botones;
+}
+#contenedorImpresion{
+    grid-area: impresion;
+}
+#contenedorClima{
+    grid-area: clima;
+}
+main{
+    display: grid;
+    grid-template-areas:
+    "clima clima"
+    "form botones"
+    "impresion impresion"
 }
