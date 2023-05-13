@@ -118,22 +118,41 @@ form.addEventListener("submit",(element)=>{
     console.log(puestaTierraBad);
     let imprimirOk="";
     let imprimirBad="";
+    let contadorOK=0;
+    let contadorBad=0;
     // reset del DOM antes de volver a imprimir
     reset();
     // imprimir PAT OK
     puestaTierraOk.forEach((element)=>{
-        imprimirOk= imprimirOk+" " +element.nombrePuestaTierra;
+      if(contadorOK>0){
+         imprimirOk= imprimirOk+", " +element.nombrePuestaTierra;
+      } else {
+         imprimirOk= element.nombrePuestaTierra;
+      }
+      contadorOK++; 
     });
-    imprimirOk= "Puestas a tierra con valor menor a 40 Ohm (si cumplen): "+imprimirOk;
-    imprimir(imprimirOk);
+    if(imprimirOk!=""){
+      imprimirOk= " * Las puestas a tierra: " +imprimirOk+" presentan un valor de resistencia a tierra que cumplen con las exigencias del Reglamento AEA Tabla 771.3.1 que establece un valor admisible máximo de 40 ohms. Sin Observaciones";
+      imprimir(imprimirOk);
+    }
+    
     // imprimir PAT BAD
     puestaTierraBad.forEach((element)=>{
-        imprimirBad= imprimirBad+" " +element.nombrePuestaTierra;
+      if(contadorBad>0){
+         imprimirBad= imprimirBad+", " +element.nombrePuestaTierra;
+      } else {
+         imprimirBad= element.nombrePuestaTierra;
+      }
+        contadorBad++; 
     })
-    imprimirBad="Puestas a tierra con valor mayor a 40 Ohm (no cumplen): "+imprimirBad;
-    imprimir(imprimirBad);
+    if(imprimirBad!=""){
+      imprimirBad=" * Las puestas a tierra: " +imprimirBad+" presentan un valor de resistencia a tierra que NO cumplen con las exigencias del Reglamento AEA Tabla 771.3.1 que establece un valor admisible máximo de 40 ohms. Deben reemplazarse las jabalinas de puesta a tierra anteriormente mencionadas por unas nuevas que cumplan con las exigencias del Reglamento AEA Tabla 771.3.1 que establece un valor admisible máximo de 40 ohms.";
+      imprimir(imprimirBad);
+    }
+    
  });
  // evento de carga de página recuperar la array PAT
  document.addEventListener('DOMContentLoaded', ()=> {
    traerLocalStore();
+   callApi();
  });

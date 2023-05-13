@@ -31,5 +31,5 @@ function datosClimaDesectructurar(datosClima){
     `;
     divClima.appendChild(contenedor);
    };
-callApi();
+
 
