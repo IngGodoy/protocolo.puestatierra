@@ -20,7 +20,6 @@ function crearObjeto(){
       icon:"success"
     });
     // alert("Se cargaron los valores de puesta a tierra con nombre: " +nombrePuestaTierra+"  valor:  "+valorPuestaTierra+"de forma exitosa...");
-    console.log(conexionPat); 
 };
 function guardarLocalStore(element){
    // guardar la array en el local store cada vez que alla un cambio
@@ -47,12 +46,9 @@ function imprimir(texto){
 }
 // funcion para darle reset al texto del DOM
 function reset(){
-   const hijos = imprimirTexto.children; //imprimirTexto es el padre
-   if (hijos.length!=0){
-      for (let i = 0; i < hijos.length+1; i++) {
-         imprimirTexto.removeChild(hijos[0]);
-       }  
-   }
+      while (imprimirTexto.firstChild){
+         imprimirTexto.removeChild(imprimirTexto.firstChild);
+       }   
 }
 function borrarArray(array) {
    while (array.length!=0) {
@@ -64,8 +60,8 @@ function borrarArray(array) {
 //evento click de agregar puesta a tierra
 form.addEventListener("submit",(element)=>{
     element.preventDefault();
+    reset();
     crearObjeto();
-    console.log(arrayPuestaTierra);
  });
  // evento valor medio
  valorMedio.addEventListener("click",()=>{
@@ -113,9 +109,7 @@ form.addEventListener("submit",(element)=>{
  // evento imprimir
  imprimirLista.addEventListener("click",()=>{
     const puestaTierraOk= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra<40);
-    console.log(puestaTierraOk);
     const puestaTierraBad= arrayPuestaTierra.filter((element)=>element.valorPuestaTierra>=40);
-    console.log(puestaTierraBad);
     let imprimirOk="";
     let imprimirBad="";
     let contadorOK=0;
@@ -148,6 +142,15 @@ form.addEventListener("submit",(element)=>{
     if(imprimirBad!=""){
       imprimirBad=" * Las puestas a tierra: " +imprimirBad+" presentan un valor de resistencia a tierra que NO cumplen con las exigencias del Reglamento AEA Tabla 771.3.1 que establece un valor admisible máximo de 40 ohms. Deben reemplazarse las jabalinas de puesta a tierra anteriormente mencionadas por unas nuevas que cumplan con las exigencias del Reglamento AEA Tabla 771.3.1 que establece un valor admisible máximo de 40 ohms.";
       imprimir(imprimirBad);
+    }
+    // verificar si todas las PAT están equipotencializadas, si es una sola PAT ignorar
+    if(arrayPuestaTierra.length>1){
+      let verificadorConexionPat=arrayPuestaTierra.some((element)=>element.conexionPat!=0);
+      if(verificadorConexionPat==true){
+         imprimir("* Hay puestas a tierras que no se encuentran equipotencializadas, se debe revisar la conexión de todas las puestas a tierra de tal forma que resulten vinculdas.");
+      }else{
+         imprimir("* Todas las puestas a tierras se encuentran equipotencializadas. Sin Observaciones.");
+      }
     }
     
  });
