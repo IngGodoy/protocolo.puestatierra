@@ -40,3 +40,16 @@ main{
     "form botones"
     "impresion clima"
 }
+td, th {
+    border: 1px solid black;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  th {
+    border-bottom: 2px solid black;
+  }
+table{
+    margin: 10px;
+    padding: 2px;
+}
