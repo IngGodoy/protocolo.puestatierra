@@ -12,14 +12,25 @@ function crearObjeto(){
     let nombrePuestaTierra=document.getElementById("nombrePat").value; //Nombre de la puesta a tierra
     let valorPuestaTierra=Number(document.getElementById("valorPat").value); // valor de la resistencia de puesta a tierra
     let conexionPat=Number(document.getElementById("conexionPat").value); // indicacion por parte del usuario si la PAT esta conectada al tablero general
-    arrayPuestaTierra.push(new PuestaTierra(nombrePuestaTierra,valorPuestaTierra,conexionPat));
-    guardarLocalStore(arrayPuestaTierra);
-    swal ( {
-      title: "Valor de Puesta a tierra",
-      text:"con nombre "+nombrePuestaTierra+" cargado con exito",
-      icon:"success"
-    });
-    crearTablaPat();
+    // verificación de datos correctos
+    if(nombrePuestaTierra!=""&&valorPuestaTierra>0&&conexionPat!=-1){
+      arrayPuestaTierra.push(new PuestaTierra(nombrePuestaTierra,valorPuestaTierra,conexionPat));
+      guardarLocalStore(arrayPuestaTierra);
+      swal ( {
+        title: "Valor de Puesta a tierra",
+        text:"con nombre "+nombrePuestaTierra+" cargado con exito",
+        icon:"success"
+      });
+      crearTablaPat();
+    }else{
+      swal({
+         title: "Error al cargar los datos…!",
+         text: "Verifique que todos los campos del formulario estén llenos, el valor de resistencia de puesta a tierra debe ser mayor a cero y usar punto para los decimales",
+         icon: "warning",
+       });
+
+    }
+    
 };
 function crearTablaPat() {
    const tablaPat = document.createElement("table");
@@ -200,7 +211,7 @@ form.addEventListener("submit",(element)=>{
          arrayPuestaTierra.forEach((element)=>{
            texto= texto+" " +element.nombrePuestaTierra+" ("+element.valorPuestaTierra+"Ohm)  /   ";
          })
-         imprimir("Orde de las Puesta a tierra en funcón de su resistencia de menor a mayor:");
+         imprimir("Orden de las Puesta a tierra en funcón de su resistencia de menor a mayor:");
          imprimir(texto);
     } else{
       mensajeArrayVacio();
